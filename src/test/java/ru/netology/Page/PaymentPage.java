@@ -22,16 +22,13 @@ public class PaymentPage {
 
     }
 
-    public void notPaymentPage(DataHelper.CardInfo invalidCardInfo) {
-        //TODO -изменить
-        $$(".input__control").get(CARD_INPUT_INDEX).setValue(invalidCardInfo.getNumber());
-        $$(".input__control").get(MONTH_INPUT_INDEX).setValue(invalidCardInfo.getMonth());
-        $$(".input__control").get(JAR_INPUT_INDEX).setValue(invalidCardInfo.getJar());
-        $$(".input__control").get(NAME_INPUT_INDEX).setValue(invalidCardInfo.getName());
-        $$(".input__control").get(CODE_INPUT_INDEX).setValue(invalidCardInfo.getCode());
+    public void notPaymentPage() {
+        $$(".input__control").get(CARD_INPUT_INDEX).setValue(DataHelper.getInvalidCardInfo().getNumber());
+        $$(".input__control").get(MONTH_INPUT_INDEX).setValue(DataHelper.getInvalidCardInfo().getMonth());
+        $$(".input__control").get(JAR_INPUT_INDEX).setValue(DataHelper.getInvalidCardInfo().getJar());
+        $$(".input__control").get(NAME_INPUT_INDEX).setValue(DataHelper.getInvalidCardInfo().getName());
+        $$(".input__control").get(CODE_INPUT_INDEX).setValue(DataHelper.getInvalidCardInfo().getCode());
         $x("//span[text() =\"Продолжить\"] ").click();
-
-
     }
 }
 

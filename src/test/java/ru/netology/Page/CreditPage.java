@@ -2,25 +2,38 @@ package ru.netology.Page;
 
 import ru.netology.Data.DataHelper;
 
+import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.$x;
+import static ru.netology.Data.DataHelper.*;
 
 public class CreditPage {
-    //TODO  -переделать-
-    public void creditGate  (DataHelper.CardInfo validCardInfo) {
-        $x("//span [text()placeholder =\"0000_0000_0000_0000\"]").setValue(validCardInfo.getNumber());
-        $x("//span [text()placeholder =\"08\"]").setValue(validCardInfo.getMonth());
-        $x("//span [text()placeholder =\"22\"]").setValue(validCardInfo.getJar());
-        $x("//span [text()autocomplete=\"on\"]").setValue(validCardInfo.getName());
-        $x("//span [text()placeholder =\"999\"]").setValue(validCardInfo.getCode());
+
+    public void creditPage  () {
+        $$(".input__control").get(CARD_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getNumber());
+        $$(".input__control").get(MONTH_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getMonth());
+        $$(".input__control").get(JAR_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getJar());
+        $$(".input__control").get(NAME_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getName());
+        $$(".input__control").get(CODE_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getCode());
+        $x("//span[text() =\"Продолжить\"] ").click();
+    }
+
+
+
+    public void notCreditPage () {
+        $$(".input__control").get(CARD_INPUT_INDEX).setValue(DataHelper.getInvalidCardInfo().getNumber());
+        $$(".input__control").get(MONTH_INPUT_INDEX).setValue(DataHelper.getInvalidCardInfo().getMonth());
+        $$(".input__control").get(JAR_INPUT_INDEX).setValue(DataHelper.getInvalidCardInfo().getJar());
+        $$(".input__control").get(NAME_INPUT_INDEX).setValue(DataHelper.getInvalidCardInfo().getName());
+        $$(".input__control").get(CODE_INPUT_INDEX).setValue(DataHelper.getInvalidCardInfo().getCode());
         $x("//span[text() =\"Продолжить\"] ").click();
 
     }
-    public void notCreditGate (DataHelper.CardInfo invalidCardInfo) {
-        $x("//span [text()placeholder =\"0000_0000_0000_0000\"]").setValue(invalidCardInfo.getNumber());
-        $x("//span [text()placeholder =\"08\"]").setValue(invalidCardInfo.getMonth());
-        $x("//span [text()placeholder =\"22\"]").setValue(invalidCardInfo.getJar());
-        $x("//span [text()autocomplete=\"on\"]").setValue(invalidCardInfo.getName());
-        $x("//span [text()placeholder =\"999\"]").setValue(invalidCardInfo.getCode());
+    public void randomCard () {
+        $$(".input__control").get(CARD_INPUT_INDEX).setValue(DataHelper.getRandomCardInfo().getNumber());
+        $$(".input__control").get(MONTH_INPUT_INDEX).setValue(DataHelper.getRandomCardInfo().getMonth());
+        $$(".input__control").get(JAR_INPUT_INDEX).setValue(DataHelper.getRandomCardInfo().getJar());
+        $$(".input__control").get(NAME_INPUT_INDEX).setValue(DataHelper.getRandomCardInfo().getName());
+        $$(".input__control").get(CODE_INPUT_INDEX).setValue(DataHelper.getRandomCardInfo().getCode());
         $x("//span[text() =\"Продолжить\"] ").click();
 
     }

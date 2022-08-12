@@ -21,9 +21,12 @@ public class DataHelper {
         String code;
     }
     public static CardInfo getValidCardInfo () {
-        return new CardInfo("4444 4444 4444 4441","08","22","Ivanov Ivan","999");
+        return new CardInfo("4444 4444 4444 4441","09","22","Ivanov Ivan","999");
     }
     public static CardInfo getInvalidCardInfo () {
-        return new CardInfo("4444 4444 4444 4442","08","22","Ivanov Ivan","999");
+        return new CardInfo("4444 4444 4444 4442","09","22","Ivanov Ivan","999");
+    }
+    public static CardInfo getRandomCardInfo() {
+        return new CardInfo("2222 2222 2222 2222","09","22","Ivanov Ivan","999");
     }
 }

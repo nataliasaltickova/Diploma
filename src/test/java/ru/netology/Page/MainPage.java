@@ -2,16 +2,16 @@ package ru.netology.Page;
 
 import static com.codeborne.selenide.Selenide.$x;
 
-public class ButtonPage {
+public class MainPage {
 
 
-    public   PaymentPage paymentPage() {
+    public   PaymentPage clickButton() {
         $x("//span[text() =\"Купить\"] ").click();
         return new PaymentPage();
 
     }
 
-    public   static CreditPage creditPage () {
+    public    CreditPage clickButtonOther() {
         $x("//span[text() =\"Купить в кредит\"] ").click();
         return new CreditPage();
 
