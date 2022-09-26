@@ -6,10 +6,14 @@ import com.codeborne.selenide.Configuration;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.netology.Data.DataHelper;
 import ru.netology.Page.CreditPage;
 import ru.netology.Page.MainPage;
 import ru.netology.Page.PaymentPage;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -52,7 +56,6 @@ public class BuyingTourTest {
     }
 
     @Test
-        //TODO bag 1 -Issue!!
     void shouldBuyingTourWithInvalidCardPayment() {
         PaymentPage paymentPage = buttonPage.clickButton();
         paymentPage.paymentPageInValidCard();
@@ -80,7 +83,6 @@ public class BuyingTourTest {
     }
 
     @Test
-        // TODO bag 2 -issue!!
     void shouldBuyingTourWithInvalidCardCredit() {
         CreditPage creditPage = buttonPage.clickButtonOther();
         creditPage.creditPageInValidCard();

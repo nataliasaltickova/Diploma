@@ -1,31 +1,32 @@
 
-#version: '3.7'
-#services:
-#  mysql:
-#    image: mysql:8.0
-#    ports: '3306:3306
-#    environment:
-#      — MYSQL_RANDOM_ROOT_PASSWORD: yes
-#      — MYSQL_DATABASE: app
-#      — MYSQL_USER: app
-#      — MYSQL_PASSWORD: pass
-
-
-
-
- version: '3.1'
+version: '3.7'
 services:
-  db:
-    image: postgres:12-alpine
-    restart: always
-
+  mysql:
+    image: mysql:8.0
     ports:
-      - '5432:5432'
-
+    - '3306:3306'
     environment:
-      POSTGRES_DB: app
-      POSTGRES_USER: app
-      POSTGRES_PASSWORD: 9mREsvXDs9Gk89Ef
+       MYSQL_ROOT_PASSWORD: root
+       MYSQL_DATABASE: app
+       MYSQL_USER: app
+       MYSQL_PASSWORD: 9mREsvXDs9Gk89Ef
+
+
+
+
+# version: '3.1'
+#services:
+#  db:
+#    image: postgres:12-alpine
+#    restart: always
+#
+#    ports:
+#      - '5432:5432'
+#
+#    environment:
+#      POSTGRES_DB: app
+#      POSTGRES_USER: app
+#      POSTGRES_PASSWORD: 9mREsvXDs9Gk89Ef
 
 
 
