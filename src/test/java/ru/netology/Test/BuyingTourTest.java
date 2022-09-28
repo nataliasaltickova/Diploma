@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.Data.DataHelper;
@@ -25,7 +26,7 @@ public class BuyingTourTest {
 
     @BeforeEach
     void setup() {
-        Configuration.holdBrowserOpen = true;
+        //Configuration.holdBrowserOpen = true;
         open("http://localhost:8080");
         buttonPage = new MainPage();
     }
