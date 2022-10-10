@@ -19,6 +19,30 @@ public class CreditPage {
         $$(".input__control").get(CODE_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getCode());
         $x("//span[text() =\"Продолжить\"] ").click();
     }
+    public void creditPageValidCardInvalidNameNumber() {
+        $$(".input__control").get(CARD_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getNumber());
+        $$(".input__control").get(MONTH_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getMonth());
+        $$(".input__control").get(JAR_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getYear());
+        $$(".input__control").get(NAME_INPUT_INDEX).setValue("1234567");
+        $$(".input__control").get(CODE_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getCode());
+        $x("//span[text() =\"Продолжить\"] ").click();
+    }
+    public void creditPageValidCardInvalidNameSimbol() {
+        $$(".input__control").get(CARD_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getNumber());
+        $$(".input__control").get(MONTH_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getMonth());
+        $$(".input__control").get(JAR_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getYear());
+        $$(".input__control").get(NAME_INPUT_INDEX).setValue("*&^%");
+        $$(".input__control").get(CODE_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getCode());
+        $x("//span[text() =\"Продолжить\"] ").click();
+    }
+    public void creditPageValidCardInvalidCode() {
+        $$(".input__control").get(CARD_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getNumber());
+        $$(".input__control").get(MONTH_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getMonth());
+        $$(".input__control").get(JAR_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getYear());
+        $$(".input__control").get(NAME_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getName());
+        $$(".input__control").get(CODE_INPUT_INDEX).setValue("000");
+        $x("//span[text() =\"Продолжить\"] ").click();
+    }
 
     public void creditPageInValidDateYearCard() {
         $$(".input__control").get(CARD_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getNumber());

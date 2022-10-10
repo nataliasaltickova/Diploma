@@ -22,6 +22,14 @@ public class PaymentPage {
         $$(".input__control").get(CODE_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getCode());
         $x("//span[text() =\"Продолжить\"] ").click();
     }
+    public void paymentPageValidCardWithInvalidCode() {
+        $$(".input__control").get(CARD_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getNumber());
+        $$(".input__control").get(MONTH_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getMonth());
+        $$(".input__control").get(JAR_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getYear());
+        $$(".input__control").get(NAME_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getName());
+        $$(".input__control").get(CODE_INPUT_INDEX).setValue("000");
+        $x("//span[text() =\"Продолжить\"] ").click();
+    }
 
     public void paymentPageInValidDateYearCard() {
         $$(".input__control").get(CARD_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getNumber());
@@ -60,11 +68,19 @@ public class PaymentPage {
 
     }
 
-    public void paymentPageValidNumberCardWithInValidName() {
+    public void paymentPageValidNumberCardWithInValidNameNumber() {
         $$(".input__control").get(CARD_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getNumber());
         $$(".input__control").get(MONTH_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getMonth());
         $$(".input__control").get(JAR_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getYear());
         $$(".input__control").get(NAME_INPUT_INDEX).setValue("123456789");
+        $$(".input__control").get(CODE_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getCode());
+        $x("//span[text() =\"Продолжить\"] ").click();
+    }
+    public void paymentPageValidNumberCardWithInValidNameSimbol() {
+        $$(".input__control").get(CARD_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getNumber());
+        $$(".input__control").get(MONTH_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getMonth());
+        $$(".input__control").get(JAR_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getYear());
+        $$(".input__control").get(NAME_INPUT_INDEX).setValue(")(*&^%");
         $$(".input__control").get(CODE_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getCode());
         $x("//span[text() =\"Продолжить\"] ").click();
     }

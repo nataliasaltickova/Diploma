@@ -2,11 +2,12 @@ package ru.netology.Test;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.netology.Data.DBHelper;
 import ru.netology.Data.DataHelper;
 import ru.netology.Page.CreditPage;
 import ru.netology.Page.MainPage;
@@ -25,8 +26,10 @@ public class BuyingTourTest {
 
 
     @BeforeEach
+
     void setup() {
-        //Configuration.holdBrowserOpen = true;
+        //DBHelper.cleanUpDB();
+        Configuration.holdBrowserOpen = true;
         open("http://localhost:8080");
         buttonPage = new MainPage();
     }
@@ -38,6 +41,9 @@ public class BuyingTourTest {
 
         $("[class=\"notification__title\"]").shouldBe(Condition.text("Успешно"), Duration.ofSeconds(15));
         $("[class=\"notification__content\"]").shouldBe(Condition.text("Операция одобрена Банком."));
+         //String actual = DBHelper.getLastStatus();
+         //assert ()//TODO status
+
     }
 
     @Test
@@ -60,6 +66,24 @@ public class BuyingTourTest {
     void shouldBuyingTourWithInvalidCardPayment() {
         PaymentPage paymentPage = buttonPage.clickButton();
         paymentPage.paymentPageInValidCard();
+
+        $$(".notification__title").get(1).shouldBe(Condition.text("Ошибка"), Duration.ofSeconds(15));
+        $$(".notification__content").get(1).shouldBe(Condition.text("Ошибка! Банк отказал в проведении операции."));
+    }
+    @Test
+    //TODO bag 4 -Issie!
+    void shouldBuyingTourPaymentValidCardWithInvalidCode() {
+        PaymentPage paymentPage = buttonPage.clickButton();
+        paymentPage.paymentPageValidCardWithInvalidCode();
+
+        $$(".notification__title").get(1).shouldBe(Condition.text("Ошибка"), Duration.ofSeconds(15));
+        $$(".notification__content").get(1).shouldBe(Condition.text("Ошибка! Банк отказал в проведении операции."));
+    }
+    @Test
+        //TODO bag 6 -Issie!
+    void shouldBuyingTourCreditValidCardWithInvalidCode() {
+        CreditPage creditPage = buttonPage.clickButtonOther();
+        creditPage.creditPageValidCardInvalidCode();
 
         $$(".notification__title").get(1).shouldBe(Condition.text("Ошибка"), Duration.ofSeconds(15));
         $$(".notification__content").get(1).shouldBe(Condition.text("Ошибка! Банк отказал в проведении операции."));
@@ -103,9 +127,36 @@ public class BuyingTourTest {
 
     @Test
         //TODO bag 3 -Issue!!
-    void shouldBuyingTourWithInvalidNameCardPayment() {
+    void shouldBuyingTourWithInvalidNameNumberCardPayment() {
         PaymentPage paymentPage = buttonPage.clickButton();
-        paymentPage.paymentPageValidNumberCardWithInValidName();
+        paymentPage.paymentPageValidNumberCardWithInValidNameNumber();
+
+        $$(".notification__title").get(1).shouldBe(Condition.text("Ошибка"), Duration.ofSeconds(15));
+        $$(".notification__content").get(1).shouldBe(Condition.text("Ошибка! Банк отказал в проведении операции."));
+    }
+    @Test
+        //TODO bag 7 -Issue!!
+    void shouldBuyingTourWithInvalidNameNumberCardCredit() {
+        CreditPage creditPage = buttonPage.clickButtonOther();
+        creditPage.creditPageValidCardInvalidNameNumber();
+
+        $$(".notification__title").get(1).shouldBe(Condition.text("Ошибка"), Duration.ofSeconds(15));
+        $$(".notification__content").get(1).shouldBe(Condition.text("Ошибка! Банк отказал в проведении операции."));
+    }
+    @Test
+        //TODO bag 7 -Issue!!
+    void shouldBuyingTourValidCardCreditWithInvalidNameSimbol() {
+        CreditPage creditPage = buttonPage.clickButtonOther();
+        creditPage.creditPageValidCardInvalidNameSimbol();
+
+        $$(".notification__title").get(1).shouldBe(Condition.text("Ошибка"), Duration.ofSeconds(15));
+        $$(".notification__content").get(1).shouldBe(Condition.text("Ошибка! Банк отказал в проведении операции."));
+    }
+    @Test
+        //TODO bag 4 -Issue!!
+    void shouldBuyingTourWithInvalidNameSimbolCardPayment() {
+        PaymentPage paymentPage = buttonPage.clickButton();
+        paymentPage.paymentPageValidNumberCardWithInValidNameSimbol();
 
         $$(".notification__title").get(1).shouldBe(Condition.text("Ошибка"), Duration.ofSeconds(15));
         $$(".notification__content").get(1).shouldBe(Condition.text("Ошибка! Банк отказал в проведении операции."));
