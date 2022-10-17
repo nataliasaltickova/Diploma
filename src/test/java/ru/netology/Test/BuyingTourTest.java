@@ -1,35 +1,34 @@
 package ru.netology.Test;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.AfterAll;
+import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.Data.DBHelper;
-import ru.netology.Data.DataHelper;
 import ru.netology.Page.CreditPage;
 import ru.netology.Page.MainPage;
 import ru.netology.Page.PaymentPage;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.*;
 
 public class BuyingTourTest {
+    //сначала перед запуском тестов нужно выбрать одну из БД:
+    String DB_URL = DBHelper.DB_URL_POSTGRESQL;
+    //String DB_URL = DBHelper.DB_URL_MYSQL;
 
     MainPage buttonPage;
 
 
     @BeforeEach
-
     void setup() {
-        //DBHelper.cleanUpDB();
-        Configuration.holdBrowserOpen = true;
+        DBHelper.cleanUpCredit(DB_URL);
+        DBHelper.cleanUpPayment(DB_URL);
+        //Configuration.holdBrowserOpen = true;
         open("http://localhost:8080");
         buttonPage = new MainPage();
     }
@@ -38,53 +37,58 @@ public class BuyingTourTest {
     void shouldBuyingTourWithCardPayment() {
         PaymentPage paymentPage = buttonPage.clickButton();
         paymentPage.paymentPageValidCard();
-
         $("[class=\"notification__title\"]").shouldBe(Condition.text("Успешно"), Duration.ofSeconds(15));
         $("[class=\"notification__content\"]").shouldBe(Condition.text("Операция одобрена Банком."));
-         //String actual = DBHelper.getLastStatus();
-         //assert ()//TODO status
+    }
 
+    @Test
+    void shouldBuyingTourWithCardPaymentCorrectAmount() {
+        PaymentPage paymentPage = buttonPage.clickButton();
+        paymentPage.paymentPageValidCard();
+        $("[class=\"notification__title\"]").shouldBe(Condition.text("Успешно"), Duration.ofSeconds(15));
+        $("[class=\"notification__content\"]").shouldBe(Condition.text("Операция одобрена Банком."));
+        //проверка корректности списанной суммы -
+        assertEquals(45000, DBHelper.getLastAmountPayment(DB_URL));
     }
 
     @Test
     void shouldBuyingTourWithCardPaymentInValidDateYear() {
         PaymentPage paymentPage = buttonPage.clickButton();
         paymentPage.paymentPageInValidDateYearCard();
-
         $("[class=\"input__sub\"]").shouldBe(Condition.text("Истёк срок действия карты"), Duration.ofSeconds(15));
+        //проверка БД -ничего н должно записаться)
+        assertEquals("", DBHelper.getLastStatusPayment(DB_URL));
     }
 
     @Test
     void shouldBuyingTourWithCardPaymentInValidDateMonth() {
         PaymentPage paymentPage = buttonPage.clickButton();
         paymentPage.paymentPageInValidDateMonthCard();
-
         $("[class=\"input__sub\"]").shouldBe(Condition.text("Неверно указан срок действия карты"), Duration.ofSeconds(15));
+        //проверка БД -ничего н должно записаться)
+        assertEquals("", DBHelper.getLastStatusPayment(DB_URL));
     }
 
     @Test
     void shouldBuyingTourWithInvalidCardPayment() {
         PaymentPage paymentPage = buttonPage.clickButton();
         paymentPage.paymentPageInValidCard();
-
         $$(".notification__title").get(1).shouldBe(Condition.text("Ошибка"), Duration.ofSeconds(15));
         $$(".notification__content").get(1).shouldBe(Condition.text("Ошибка! Банк отказал в проведении операции."));
     }
+
     @Test
-    //TODO bag 4 -Issie!
     void shouldBuyingTourPaymentValidCardWithInvalidCode() {
         PaymentPage paymentPage = buttonPage.clickButton();
         paymentPage.paymentPageValidCardWithInvalidCode();
-
         $$(".notification__title").get(1).shouldBe(Condition.text("Ошибка"), Duration.ofSeconds(15));
         $$(".notification__content").get(1).shouldBe(Condition.text("Ошибка! Банк отказал в проведении операции."));
     }
+
     @Test
-        //TODO bag 6 -Issie!
     void shouldBuyingTourCreditValidCardWithInvalidCode() {
         CreditPage creditPage = buttonPage.clickButtonOther();
         creditPage.creditPageValidCardInvalidCode();
-
         $$(".notification__title").get(1).shouldBe(Condition.text("Ошибка"), Duration.ofSeconds(15));
         $$(".notification__content").get(1).shouldBe(Condition.text("Ошибка! Банк отказал в проведении операции."));
     }
@@ -102,7 +106,6 @@ public class BuyingTourTest {
     void shouldBuyingTourWithCardCredit() {
         CreditPage creditPage = buttonPage.clickButtonOther();
         creditPage.creditPageValidCard();
-
         $("[class=\"notification__title\"]").shouldBe(Condition.text("Успешно"), Duration.ofSeconds(15));
         $("[class=\"notification__content\"]").shouldBe(Condition.text("Операция одобрена Банком."));
     }
@@ -111,7 +114,6 @@ public class BuyingTourTest {
     void shouldBuyingTourWithInvalidCardCredit() {
         CreditPage creditPage = buttonPage.clickButtonOther();
         creditPage.creditPageInValidCard();
-
         $$(".notification__title").get(1).shouldBe(Condition.text("Ошибка"), Duration.ofSeconds(15));
         $$(".notification__content").get(1).shouldBe(Condition.text("Ошибка! Банк отказал в проведении операции."));
     }
@@ -120,62 +122,59 @@ public class BuyingTourTest {
     void shouldBuyingTourWithAnotherCardCredit() {
         CreditPage creditPage = buttonPage.clickButtonOther();
         creditPage.creditPageAnotherCard();
-
         $$(".notification__title").get(1).shouldBe(Condition.text("Ошибка"), Duration.ofSeconds(15));
         $$(".notification__content").get(1).shouldBe(Condition.text("Ошибка! Банк отказал в проведении операции."));
     }
 
     @Test
-        //TODO bag 3 -Issue!!
-    void shouldBuyingTourWithInvalidNameNumberCardPayment() {
+    void shouldBuyingTourCardPaymentWithInvalidNameAsNumber() {
         PaymentPage paymentPage = buttonPage.clickButton();
-        paymentPage.paymentPageValidNumberCardWithInValidNameNumber();
-
+        paymentPage.paymentPageValidNumberCardWithInValidNameAsNumber();
         $$(".notification__title").get(1).shouldBe(Condition.text("Ошибка"), Duration.ofSeconds(15));
         $$(".notification__content").get(1).shouldBe(Condition.text("Ошибка! Банк отказал в проведении операции."));
     }
+
     @Test
-        //TODO bag 7 -Issue!!
-    void shouldBuyingTourWithInvalidNameNumberCardCredit() {
+    void shouldBuyingTourCardCreditWithInvalidNameAsNumber() {
         CreditPage creditPage = buttonPage.clickButtonOther();
-        creditPage.creditPageValidCardInvalidNameNumber();
-
+        creditPage.creditPageValidCardWithInvalidNameAsNumber();
         $$(".notification__title").get(1).shouldBe(Condition.text("Ошибка"), Duration.ofSeconds(15));
         $$(".notification__content").get(1).shouldBe(Condition.text("Ошибка! Банк отказал в проведении операции."));
     }
+
     @Test
-        //TODO bag 7 -Issue!!
-    void shouldBuyingTourValidCardCreditWithInvalidNameSimbol() {
+    void shouldBuyingTourCardCreditWithInvalidNameAsSymbol() {
         CreditPage creditPage = buttonPage.clickButtonOther();
-        creditPage.creditPageValidCardInvalidNameSimbol();
-
+        creditPage.creditPageValidCardWithInvalidNameAsSymbol();
         $$(".notification__title").get(1).shouldBe(Condition.text("Ошибка"), Duration.ofSeconds(15));
         $$(".notification__content").get(1).shouldBe(Condition.text("Ошибка! Банк отказал в проведении операции."));
     }
+
     @Test
-        //TODO bag 4 -Issue!!
-    void shouldBuyingTourWithInvalidNameSimbolCardPayment() {
+    void shouldBuyingTourCardPaymentWithInvalidNameAsSymbol() {
         PaymentPage paymentPage = buttonPage.clickButton();
-        paymentPage.paymentPageValidNumberCardWithInValidNameSimbol();
-
+        paymentPage.paymentPageValidNumberCardWithInValidNameAsSymbol();
         $$(".notification__title").get(1).shouldBe(Condition.text("Ошибка"), Duration.ofSeconds(15));
         $$(".notification__content").get(1).shouldBe(Condition.text("Ошибка! Банк отказал в проведении операции."));
     }
 
     @Test
-    void shouldBuyingTourWithCreditCardInValidDateYar() {
+    void shouldBuyingTourCreditCardWithInValidDateYar() {
         CreditPage creditPage = buttonPage.clickButtonOther();
         creditPage.creditPageInValidDateYearCard();
 
         $("[class=\"input__sub\"]").shouldBe(Condition.text("Истёк срок действия карты"), Duration.ofSeconds(15));
+        //проверка БД -ничего н должно записаться)
+        assertEquals("", DBHelper.getLastStatusPayment(DB_URL));
     }
 
     @Test
-    void shouldBuyingTourWithCreditCardInValidDateMonth() {
+    void shouldBuyingTourCreditCardWithInValidDateMonth() {
         CreditPage creditPage = buttonPage.clickButtonOther();
         creditPage.creditPageInValidDateMonthCard();
 
         $("[class=\"input__sub\"]").shouldBe(Condition.text("Неверно указан срок действия карты"), Duration.ofSeconds(15));
+        //проверка БД -ничего н должно записаться)
+        assertEquals("", DBHelper.getLastStatusPayment(DB_URL));
     }
-
 }

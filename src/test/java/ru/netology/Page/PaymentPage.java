@@ -22,6 +22,7 @@ public class PaymentPage {
         $$(".input__control").get(CODE_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getCode());
         $x("//span[text() =\"Продолжить\"] ").click();
     }
+
     public void paymentPageValidCardWithInvalidCode() {
         $$(".input__control").get(CARD_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getNumber());
         $$(".input__control").get(MONTH_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getMonth());
@@ -68,7 +69,7 @@ public class PaymentPage {
 
     }
 
-    public void paymentPageValidNumberCardWithInValidNameNumber() {
+    public void paymentPageValidNumberCardWithInValidNameAsNumber() {
         $$(".input__control").get(CARD_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getNumber());
         $$(".input__control").get(MONTH_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getMonth());
         $$(".input__control").get(JAR_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getYear());
@@ -76,7 +77,8 @@ public class PaymentPage {
         $$(".input__control").get(CODE_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getCode());
         $x("//span[text() =\"Продолжить\"] ").click();
     }
-    public void paymentPageValidNumberCardWithInValidNameSimbol() {
+
+    public void paymentPageValidNumberCardWithInValidNameAsSymbol() {
         $$(".input__control").get(CARD_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getNumber());
         $$(".input__control").get(MONTH_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getMonth());
         $$(".input__control").get(JAR_INPUT_INDEX).setValue(DataHelper.getValidCardInfo().getYear());

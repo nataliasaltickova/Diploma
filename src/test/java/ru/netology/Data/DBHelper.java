@@ -2,61 +2,91 @@ package ru.netology.Data;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
+
 
 public class DBHelper {
-    public  static void cleanUpPayment () {
-        var cleanSQL = "DELETE FROM app.payment_entity;";
+
+    public static final String DB_URL_MYSQL = "jdbc:mysql://localhost:3306/app";
+    public static final String DB_URL_POSTGRESQL = "jdbc:postgresql://localhost:5432/postgres";
+
+    public static void cleanUpPayment(String url) {
+
         try (
                 var conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/app", "app", "9mREsvXDs9Gk89Ef");
-                var countStmt = conn.createStatement();
-                var rs = countStmt.executeQuery(cleanSQL);
-        ) {}
-        catch (SQLException e) {
-            e.printStackTrace();
-    }
-    }
-    public  static void cleanUpCredit () {
-        var cleanSQL = "DELETE FROM app.credit_request_entity;";
-        try (
-                var conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/app", "app", "9mREsvXDs9Gk89Ef");
-                var countStmt = conn.createStatement();
-                var rs = countStmt.executeQuery(cleanSQL);
-        ) {}
-        catch (SQLException e) {
+                        url, "app", "9mREsvXDs9Gk89Ef");
+                Statement stmt = conn.createStatement();
+        ) {
+            String sql = "DELETE FROM payment_entity;";
+            stmt.executeUpdate(sql);
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public  static String getLastStatusCredit () {
-        var statusSQL = "SELECT status  FROM credit_request_entity ORDER BY created;";
+
+    public static void cleanUpCredit(String url) {
         try (
                 var conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/app", "app", "9mREsvXDs9Gk89Ef");
+                        url, "app", "9mREsvXDs9Gk89Ef");
+                Statement stmt = conn.createStatement();
+        ) {
+            String sql = "DELETE FROM credit_request_entity;";
+            stmt.executeUpdate(sql);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String getLastStatusCredit(String url) {
+        var statusSQL = "SELECT * FROM credit_request_entity;";
+        try (
+                var conn = DriverManager.getConnection(
+                        url, "app", "9mREsvXDs9Gk89Ef");
                 var countStmt = conn.createStatement();
                 var rs = countStmt.executeQuery(statusSQL);
         ) {
             if (rs.next()) {
+                return rs.getString("status");
             }
-            var count = rs.getString(1);
-            System.out.println(count);
+            return "";
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return "";
     }
-    public  static String getLastStatusPayment () {
-        var statusSQL = "SELECT status  FROM payment_entity ORDER BY created;";
+
+    public static String getLastStatusPayment(String url) {
+        var statusSQL = "SELECT * FROM payment_entity;";
         try (
                 var conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/app", "app", "9mREsvXDs9Gk89Ef");
-                var countStmt = conn.createStatement();
-                var rs = countStmt.executeQuery(statusSQL);
+                        url, "app", "9mREsvXDs9Gk89Ef");
+                var statusStmt = conn.createStatement();
+                var rs = statusStmt.executeQuery(statusSQL);
         ) {
             if (rs.next()) {
+                return rs.getString("status");
             }
-            var count = rs.getString(1);
-            System.out.println(count);
+            return "";
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static String getLastAmountPayment(String url) {
+        var amountSQL = "SELECT *  FROM payment_entity;";
+        try (
+                var conn = DriverManager.getConnection(
+                        url, "app", "9mREsvXDs9Gk89Ef");
+                var amountStmt = conn.createStatement();
+                var rs = amountStmt.executeQuery(amountSQL);
+        ) {
+            if (rs.next()) {
+                return rs.getString("amount");
+            }
+            return "";
         } catch (SQLException e) {
             e.printStackTrace();
         }

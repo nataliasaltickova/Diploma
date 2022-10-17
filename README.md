@@ -14,5 +14,6 @@ java11, npm , Docker,IntelliJ IDEA
 'cd gate-simulator'    
 5. Затем выполняем команду:
  'npm start'    
-6. В директории src в пакете  ru.netology открываем файл 'BuyingTourTest'    
-7. Запускаем тесты в классе 'BuyingTourTest'
+6. В директории src в пакете  ru.netology открываем файл 'BuyingTourTest' 
+7. сначала перед запуском тестов нужно выбрать одну из БД -указаны после названия класса.
+8. Запускаем тесты в классе 'BuyingTourTest'
