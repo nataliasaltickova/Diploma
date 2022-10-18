@@ -28,7 +28,7 @@ public class BuyingTourTest {
     void setup() {
         DBHelper.cleanUpCredit(DB_URL);
         DBHelper.cleanUpPayment(DB_URL);
-        //Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = true;
         open("http://localhost:8080");
         buttonPage = new MainPage();
     }

@@ -17,7 +17,13 @@
 2.Задача- проверить поддержку двух СУБД.
 
 По результатам запросов в базы данных приложение поддерживается :
-MySQL и PostgreSQL
+СуБД -MySQL.
+
+Поддержка СуБД  PostgreSQL тоже есть, только с немного измененными настройками в файле application.properties:
+
+в задании было указано "spring.datasource.url=jdbc:mysql://localhost:3306/**_app_**"
+
+фактически использовалось spring.datasource.url=jdbc:postgresql://localhost:5432/**_postgres_**"
 
 ![alt text](C:/Users/79271/Desktop/МОЕ/testing/docker starting.png)
 

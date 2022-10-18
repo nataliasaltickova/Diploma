@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class RequestTest {
     MainPage buttonPage;
     //сначала перед запуском тестов нужно выбрать одну из БД:
-    //String DB_URL = DBHelper.DB_URL_POSTGRESQL;
-    String DB_URL = DBHelper.DB_URL_MYSQL;
+    String DB_URL = DBHelper.DB_URL_POSTGRESQL;
+    //String DB_URL = DBHelper.DB_URL_MYSQL;
 
 
     @BeforeEach
