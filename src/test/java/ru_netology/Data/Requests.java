@@ -1,15 +1,10 @@
-package ru.netology.Data;
+package ru_netology.Data;
 
 import com.google.gson.Gson;
-import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.Locale;
 
 import static io.restassured.RestAssured.given;
 

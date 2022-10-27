@@ -1,11 +1,11 @@
-package ru.netology.Test;
+package ru_netology.Test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.netology.Data.Card;
-import ru.netology.Data.DBHelper;
-import ru.netology.Data.Requests;
-import ru.netology.Page.MainPage;
+import ru_netology.Data.Card;
+import ru_netology.Data.DBHelper;
+import ru_netology.Data.Requests;
+import ru_netology.Page.MainPage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

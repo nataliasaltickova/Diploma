@@ -1,4 +1,4 @@
-package ru.netology.Test;
+package ru_netology.Test;
 
 import com.codeborne.selenide.Condition;
 
@@ -7,10 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.netology.Data.DBHelper;
-import ru.netology.Page.CreditPage;
-import ru.netology.Page.MainPage;
-import ru.netology.Page.PaymentPage;
+import ru_netology.Data.DBHelper;
+import ru_netology.Page.CreditPage;
+import ru_netology.Page.MainPage;
+import ru_netology.Page.PaymentPage;
 
 import java.time.Duration;
 
